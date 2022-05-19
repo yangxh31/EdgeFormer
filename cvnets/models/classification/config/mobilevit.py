@@ -4,7 +4,7 @@
 #
 from typing import Dict
 
-from utils import logger
+from EdgeFormer.utils import logger
 
 
 def get_configuration(opts) -> Dict:

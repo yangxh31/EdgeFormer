@@ -28,7 +28,7 @@ for file in os.listdir(loss_fn_dir):
             and (file.endswith(".py") or os.path.isdir(path))
     ):
         model_name = file[: file.find(".py")] if file.endswith(".py") else file
-        module = importlib.import_module("loss_fn.segmentation_loss_fns." + model_name)
+        module = importlib.import_module("EdgeFormer.loss_fn.segmentation_loss_fns." + model_name)
 
 
-from loss_fn.segmentation_loss_fns.cross_entropy import SegCrossEntropy
+from EdgeFormer.loss_fn.segmentation_loss_fns.cross_entropy import SegCrossEntropy

@@ -24,7 +24,7 @@ for file in os.listdir(act_dir):
             and (file.endswith(".py") or os.path.isdir(path))
     ):
         model_name = file[: file.find(".py")] if file.endswith(".py") else file
-        module = importlib.import_module("cvnets.layers.activation." + model_name)
+        module = importlib.import_module("EdgeFormer.cvnets.layers.activation." + model_name)
 
 
 def arguments_activation_fn(parser: argparse.ArgumentParser):
@@ -38,15 +38,15 @@ def arguments_activation_fn(parser: argparse.ArgumentParser):
 
 
 # import later to avoid circular loop
-from cvnets.layers.activation.gelu import GELU
-from cvnets.layers.activation.hard_sigmoid import Hardsigmoid
-from cvnets.layers.activation.hard_swish import Hardswish
-from cvnets.layers.activation.leaky_relu import LeakyReLU
-from cvnets.layers.activation.prelu import PReLU
-from cvnets.layers.activation.relu import ReLU
-from cvnets.layers.activation.relu6 import ReLU6
-from cvnets.layers.activation.sigmoid import Sigmoid
-from cvnets.layers.activation.swish import Swish
+from EdgeFormer.cvnets.layers.activation.gelu import GELU
+from EdgeFormer.cvnets.layers.activation.hard_sigmoid import Hardsigmoid
+from EdgeFormer.cvnets.layers.activation.hard_swish import Hardswish
+from EdgeFormer.cvnets.layers.activation.leaky_relu import LeakyReLU
+from EdgeFormer.cvnets.layers.activation.prelu import PReLU
+from EdgeFormer.cvnets.layers.activation.relu import ReLU
+from EdgeFormer.cvnets.layers.activation.relu6 import ReLU6
+from EdgeFormer.cvnets.layers.activation.sigmoid import Sigmoid
+from EdgeFormer.cvnets.layers.activation.swish import Swish
 
 
 __all__ = [

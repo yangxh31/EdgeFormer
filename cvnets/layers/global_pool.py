@@ -2,7 +2,7 @@ import torch
 from torch import Tensor
 import argparse
 
-from utils import logger
+from EdgeFormer.utils import logger
 
 from .base_layer import BaseLayer
 

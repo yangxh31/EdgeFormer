@@ -3,7 +3,7 @@ from torch import nn
 import argparse
 from typing import Dict, Tuple, Optional
 
-from utils import logger
+from EdgeFormer.utils import logger
 
 from . import register_cls_models
 from .base_cls import BaseEncoder

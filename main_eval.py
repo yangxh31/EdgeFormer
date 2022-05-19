@@ -3,14 +3,14 @@ import torch
 import multiprocessing
 
 
-from cvnets import get_model
+from EdgeFormer.cvnets import get_model
 from data import create_eval_loader
 from engine import Evaluator
 
-from options.opts import get_eval_arguments
-from utils import logger
-from utils.common_utils import device_setup, create_directories
-from utils.ddp_utils import is_master, distributed_init
+from EdgeFormer.options.opts import get_eval_arguments
+from EdgeFormer.utils import logger
+from EdgeFormer.utils.common_utils import device_setup, create_directories
+from EdgeFormer.utils.ddp_utils import is_master, distributed_init
 
 
 def main(opts, **kwargs):

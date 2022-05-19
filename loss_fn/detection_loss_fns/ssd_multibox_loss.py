@@ -9,10 +9,10 @@ from torch import Tensor
 import argparse
 from typing import Tuple
 
-from utils.tensor_utils import tensor_to_python_float
-from utils import logger
-from utils.ddp_utils import is_master
-from cvnets.misc.third_party.ssd_utils import hard_negative_mining
+from EdgeFormer.utils.tensor_utils import tensor_to_python_float
+from EdgeFormer.utils import logger
+from EdgeFormer.utils.ddp_utils import is_master
+from EdgeFormer.cvnets.misc.third_party.ssd_utils import hard_negative_mining
 
 from . import register_detection_loss_fn
 from .. import BaseCriteria

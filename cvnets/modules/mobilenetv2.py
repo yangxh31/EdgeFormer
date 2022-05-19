@@ -1,6 +1,6 @@
-from cvnets.modules import BaseModule
+from EdgeFormer.cvnets.modules import BaseModule
 from torch import nn, Tensor
-from utils.math_utils import make_divisible
+from EdgeFormer.utils.math_utils import make_divisible
 from typing import Optional, Union
 
 from ..misc.profiler import module_profile

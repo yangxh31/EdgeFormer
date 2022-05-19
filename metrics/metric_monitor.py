@@ -6,7 +6,7 @@
 from typing import Optional, Tuple
 from torch import Tensor
 
-from utils.tensor_utils import tensor_to_python_float
+from EdgeFormer.utils.tensor_utils import tensor_to_python_float
 
 from .topk_accuracy import top_k_accuracy
 from .intersection_over_union import compute_miou_batch

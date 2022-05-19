@@ -5,7 +5,7 @@
 
 from torch import Tensor
 import argparse
-from utils import logger
+from EdgeFormer.utils import logger
 from typing import Union
 
 from . import BaseCriteria, register_loss_fn

@@ -9,7 +9,7 @@ import coremltools as ct
 from typing import Optional, Dict, Tuple, Union
 import numpy as np
 
-from utils.tensor_utils import create_rand_tensor
+from EdgeFormer.utils.tensor_utils import create_rand_tensor
 from torch.utils.mobile_optimizer import optimize_for_mobile
 
 

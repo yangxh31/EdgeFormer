@@ -2,7 +2,7 @@
 from torch import nn, Tensor
 import argparse
 
-from cvnets.layers import norm_layers_tuple
+from EdgeFormer.cvnets.layers import norm_layers_tuple
 
 from ..classification import BaseEncoder
 from ... import parameter_list

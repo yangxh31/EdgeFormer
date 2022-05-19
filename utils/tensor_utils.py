@@ -9,7 +9,7 @@ from torch import Tensor
 from torch import distributed as dist
 from typing import Union, Optional, Tuple
 
-from common import DEFAULT_IMAGE_HEIGHT, DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_CHANNELS
+from EdgeFormer.common import DEFAULT_IMAGE_HEIGHT, DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_CHANNELS
 
 
 def tensor_size_from_opts(opts) -> Tuple[int, int]:

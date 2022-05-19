@@ -2,7 +2,7 @@
 from torch import Tensor
 from .base_layer import BaseLayer
 import random
-from utils.math_utils import bound_fn
+from EdgeFormer.utils.math_utils import bound_fn
 from collections import OrderedDict
 
 

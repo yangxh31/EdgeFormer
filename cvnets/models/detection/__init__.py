@@ -4,10 +4,10 @@ import os
 import importlib
 import argparse
 
-from utils.download_utils import get_local_path
-from utils import logger
-from utils.ddp_utils import is_master
-from utils.common_utils import check_frozen_norm_layer
+from EdgeFormer.utils.download_utils import get_local_path
+from EdgeFormer.utils import logger
+from EdgeFormer.utils.ddp_utils import is_master
+from EdgeFormer.utils.common_utils import check_frozen_norm_layer
 
 from ...misc.common import load_pretrained_model
 from ...models.classification import build_classification_model
@@ -106,4 +106,4 @@ for file in os.listdir(models_dir):
             and (file.endswith(".py") or os.path.isdir(path))
     ):
         model_name = file[: file.find(".py")] if file.endswith(".py") else file
-        module = importlib.import_module("cvnets.models.detection." + model_name)
+        module = importlib.import_module("EdgeFormer.cvnets.models.detection." + model_name)

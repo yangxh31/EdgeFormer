@@ -5,7 +5,7 @@
 
 import torch
 from torch import nn, Tensor
-from utils import logger
+from EdgeFormer.utils import logger
 from typing import Optional, Dict
 import argparse
 

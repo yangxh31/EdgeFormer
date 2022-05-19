@@ -2,7 +2,7 @@
 import torch
 from torch import nn
 from typing import Optional
-from utils import logger
+from EdgeFormer.utils import logger
 import math
 from .identity import Identity
 from .normalization import (

@@ -1,6 +1,6 @@
 import torch
 from torch import nn, Tensor
-from utils import logger
+from EdgeFormer.utils import logger
 import argparse
 from typing import Optional, Tuple, Dict, Union
 from torchvision.ops import nms as torch_nms

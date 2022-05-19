@@ -9,11 +9,11 @@ import torch
 from torch import nn, Tensor
 import argparse
 
-from utils import logger
-from utils.tensor_utils import tensor_to_python_float
-from utils.ddp_utils import is_master
-from utils.checkpoint_utils import load_state_dict
-from cvnets.models.classification import build_classification_model
+from EdgeFormer.utils import logger
+from EdgeFormer.utils.tensor_utils import tensor_to_python_float
+from EdgeFormer.utils.ddp_utils import is_master
+from EdgeFormer.utils.checkpoint_utils import load_state_dict
+from EdgeFormer.cvnets.models.classification import build_classification_model
 
 from . import register_distillation_loss_fn
 from .. import BaseCriteria
@@ -81,7 +81,7 @@ class VanillaDistillationLoss(BaseCriteria):
     def build_label_loss_fn(opts) -> BaseCriteria:
         label_loss_name = getattr(opts, "loss.distillation.vanilla_label_loss", "cross_entropy")
         if label_loss_name == "cross_entropy":
-            from loss_fn.classification import ClassificationLoss
+            from EdgeFormer.loss_fn.classification import ClassificationLoss
             loss_fn_name = getattr(opts, "loss.classification.name", "cross_entropy")
             setattr(opts, "loss.classification.name", label_loss_name)
             label_loss = ClassificationLoss(opts)

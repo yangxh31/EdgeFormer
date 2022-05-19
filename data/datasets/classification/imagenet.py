@@ -4,7 +4,7 @@ from typing import Optional, Tuple, Dict
 import torch
 import numpy as np
 
-from utils import logger
+from EdgeFormer.utils import logger
 
 from .. import register_dataset
 from ..dataset_base import BaseImageDataset
@@ -110,7 +110,7 @@ class ImagenetDataset(BaseImageDataset, ImageFolder):
         return len(self.samples)
 
     def __repr__(self):
-        from utils.tensor_utils import tensor_size_from_opts
+        from EdgeFormer.utils.tensor_utils import tensor_size_from_opts
         im_h, im_w = tensor_size_from_opts(opts=self.opts)
 
         if self.is_training:

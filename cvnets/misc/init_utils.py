@@ -1,9 +1,9 @@
 
 from torch import nn
-from cvnets.layers import LinearLayer, GroupLinear
-from utils import logger
+from EdgeFormer.cvnets.layers import LinearLayer, GroupLinear
+from EdgeFormer.utils import logger
 from typing import Optional
-from cvnets.layers import norm_layers_tuple
+from EdgeFormer.cvnets.layers import norm_layers_tuple
 
 
 supported_conv_inits = ['kaiming_normal', 'kaiming_uniform', 'xavier_normal', 'xavier_uniform', 'normal', 'trunc_normal']

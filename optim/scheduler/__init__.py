@@ -5,7 +5,7 @@
 
 import os
 import importlib
-from utils import logger
+from EdgeFormer.utils import logger
 import argparse
 
 from .base_scheduler import BaseLRScheduler

@@ -1,6 +1,6 @@
 
 import argparse
-from utils import logger
+from EdgeFormer.utils import logger
 
 from .segmentation import arguments_segmentation, build_segmentation_model
 from .classification import arguments_classification, build_classification_model

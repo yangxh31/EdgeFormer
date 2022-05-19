@@ -1,6 +1,6 @@
 
 from torch import Tensor
-from utils import logger
+from EdgeFormer.utils import logger
 from typing import Union, Dict, Tuple
 
 from . import BaseSegmentation, register_segmentation_models

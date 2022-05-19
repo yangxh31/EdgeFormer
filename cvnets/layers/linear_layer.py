@@ -4,7 +4,7 @@ from torch import nn, Tensor
 from typing import Optional
 import argparse
 
-from utils import logger
+from EdgeFormer.utils import logger
 
 from .base_layer import BaseLayer
 

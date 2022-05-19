@@ -5,7 +5,7 @@
 
 from torch import Tensor
 import argparse
-from utils import logger
+from EdgeFormer.utils import logger
 
 from . import BaseCriteria, register_loss_fn
 from .distillation_loss_fns import VanillaDistillationLoss, SUPPORTED_DISTILL_LOSS_FNS

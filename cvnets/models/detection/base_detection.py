@@ -2,7 +2,7 @@
 from torch import nn, Tensor
 from typing import NamedTuple, Dict
 import argparse
-from utils import logger
+from EdgeFormer.utils import logger
 
 from ..classification import BaseEncoder
 from ... import parameter_list

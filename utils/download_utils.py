@@ -9,8 +9,8 @@ import torch.distributed as dist
 from urllib import request
 
 
-from common import TMP_CACHE_LOC
-from utils.ddp_utils import is_master
+from EdgeFormer.common import TMP_CACHE_LOC
+from EdgeFormer.utils.ddp_utils import is_master
 
 
 def get_local_path(opts, path, *args, **kwargs):

@@ -5,7 +5,7 @@
 
 import argparse
 import math
-from utils import logger
+from EdgeFormer.utils import logger
 import numpy as np
 
 from . import register_scheduler

@@ -39,8 +39,8 @@ for file in os.listdir(metrics_dir):
             and (file.endswith(".py") or os.path.isdir(path))
     ):
         model_name = file[: file.find(".py")] if file.endswith(".py") else file
-        module = importlib.import_module("metrics." + model_name)
+        module = importlib.import_module("EdgeFormer.metrics." + model_name)
 
 
-from metrics.stats import Statistics
-from metrics.metric_monitor import metric_monitor
+from EdgeFormer.metrics.stats import Statistics
+from EdgeFormer.metrics.metric_monitor import metric_monitor

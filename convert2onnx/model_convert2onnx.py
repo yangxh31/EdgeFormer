@@ -1,6 +1,6 @@
 import torch
-from cvnets import get_model
-from options.opts import get_training_arguments
+from EdgeFormer.cvnets import get_model
+from EdgeFormer.options.opts import get_training_arguments
 
 # initialization
 opts = get_training_arguments()

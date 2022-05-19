@@ -1,6 +1,6 @@
 
 from typing import Optional
-from utils import logger
+from EdgeFormer.utils import logger
 
 from .activation import (
     ReLU, Hardswish, Hardsigmoid, PReLU, LeakyReLU, Swish, GELU, Sigmoid, ReLU6, SUPPORTED_ACT_FNS

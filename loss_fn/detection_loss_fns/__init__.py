@@ -28,8 +28,8 @@ for file in os.listdir(loss_fn_dir):
             and (file.endswith(".py") or os.path.isdir(path))
     ):
         model_name = file[: file.find(".py")] if file.endswith(".py") else file
-        module = importlib.import_module("loss_fn.detection_loss_fns." + model_name)
+        module = importlib.import_module("EdgeFormer.loss_fn.detection_loss_fns." + model_name)
 
 
 # import these after loading loss_fn names to avoid looping
-from loss_fn.detection_loss_fns.ssd_multibox_loss import SSDLoss
+from EdgeFormer.loss_fn.detection_loss_fns.ssd_multibox_loss import SSDLoss

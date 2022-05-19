@@ -7,9 +7,9 @@ import yaml
 import os
 import collections
 
-from utils import logger
-from utils.ddp_utils import is_master
-from utils.download_utils import get_local_path
+from EdgeFormer.utils import logger
+from EdgeFormer.utils.ddp_utils import is_master
+from EdgeFormer.utils.download_utils import get_local_path
 
 DEFAULT_CONFIG_DIR = "config"
 

@@ -8,7 +8,7 @@ import importlib
 
 import torch.nn
 
-from utils import logger
+from EdgeFormer.utils import logger
 import argparse
 
 from .base_optim import BaseOptim

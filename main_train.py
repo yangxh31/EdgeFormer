@@ -2,20 +2,20 @@ import warnings
 warnings.filterwarnings('ignore')
 import multiprocessing
 import torch
-from utils import logger
-from options.opts import get_training_arguments
-from utils.common_utils import device_setup, create_directories
-from utils.ddp_utils import is_master, distributed_init
-from cvnets import get_model, EMA
-from loss_fn import build_loss_fn
-from optim import build_optimizer
-from optim.scheduler import build_scheduler
+from EdgeFormer.utils import logger
+from EdgeFormer.options.opts import get_training_arguments
+from EdgeFormer.utils.common_utils import device_setup, create_directories
+from EdgeFormer.utils.ddp_utils import is_master, distributed_init
+from EdgeFormer.cvnets import get_model, EMA
+from EdgeFormer.loss_fn import build_loss_fn
+from EdgeFormer.optim import build_optimizer
+from EdgeFormer.optim.scheduler import build_scheduler
 from data import create_train_val_loader
-from utils.checkpoint_utils import load_checkpoint, load_model_state
+from EdgeFormer.utils.checkpoint_utils import load_checkpoint, load_model_state
 from engine import Trainer
 import math
 from torch.cuda.amp import GradScaler
-from common import DEFAULT_EPOCHS, DEFAULT_ITERATIONS, DEFAULT_MAX_ITERATIONS, DEFAULT_MAX_EPOCHS
+from EdgeFormer.common import DEFAULT_EPOCHS, DEFAULT_ITERATIONS, DEFAULT_MAX_ITERATIONS, DEFAULT_MAX_EPOCHS
 
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)

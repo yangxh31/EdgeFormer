@@ -1,11 +1,11 @@
 
 import os
 import importlib
-from utils import logger
+from EdgeFormer.utils import logger
 import argparse
-from utils.download_utils import get_local_path
-from utils.ddp_utils import is_master
-from utils.common_utils import check_frozen_norm_layer
+from EdgeFormer.utils.download_utils import get_local_path
+from EdgeFormer.utils.ddp_utils import is_master
+from EdgeFormer.utils.common_utils import check_frozen_norm_layer
 
 from .base_seg import BaseSegmentation
 from ...misc.common import load_pretrained_model
@@ -128,7 +128,7 @@ def arguments_segmentation(parser: argparse.ArgumentParser):
     for k, v in SEG_MODEL_REGISTRY.items():
         parser = v.add_arguments(parser=parser)
 
-    from cvnets.models.segmentation.heads import arguments_segmentation_head
+    from EdgeFormer.cvnets.models.segmentation.heads import arguments_segmentation_head
     parser = arguments_segmentation_head(parser)
 
     return parser
@@ -144,4 +144,4 @@ for file in os.listdir(models_dir):
             and (file.endswith(".py") or os.path.isdir(path))
     ):
         model_name = file[: file.find(".py")] if file.endswith(".py") else file
-        module = importlib.import_module("cvnets.models.segmentation." + model_name)
+        module = importlib.import_module("EdgeFormer.cvnets.models.segmentation." + model_name)

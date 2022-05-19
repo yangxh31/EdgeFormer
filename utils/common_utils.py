@@ -6,10 +6,10 @@
 import random
 import torch
 import numpy as np
-from utils import logger
+from EdgeFormer.utils import logger
 import os
-from utils.ddp_utils import is_master
-from cvnets.layers import norm_layers_tuple
+from EdgeFormer.utils.ddp_utils import is_master
+from EdgeFormer.cvnets.layers import norm_layers_tuple
 
 
 def check_compatibility():

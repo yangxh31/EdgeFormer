@@ -7,7 +7,7 @@
 import socket
 import torch
 import torch.distributed as dist
-from utils import logger
+from EdgeFormer.utils import logger
 
 
 def is_master(opts) -> bool:

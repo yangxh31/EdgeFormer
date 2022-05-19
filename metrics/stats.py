@@ -7,7 +7,7 @@ import sys
 import time
 import numpy as np
 import torch
-from utils import logger
+from EdgeFormer.utils import logger
 from typing import Optional, Dict, Union, Any
 
 from . import SUPPORTED_STATS

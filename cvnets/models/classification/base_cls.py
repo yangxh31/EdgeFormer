@@ -6,7 +6,7 @@ import time
 import copy
 import argparse
 
-from utils import logger
+from EdgeFormer.utils import logger
 
 from ... import parameter_list
 from ...layers import norm_layers_tuple
