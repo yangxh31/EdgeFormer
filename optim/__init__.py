@@ -87,4 +87,4 @@ for file in os.listdir(optim_dir):
             and (file.endswith(".py") or os.path.isdir(path))
     ):
         optim_name = file[: file.find(".py")] if file.endswith(".py") else file
-        module = importlib.import_module("optim." + optim_name)
+        module = importlib.import_module("EdgeFormer.optim." + optim_name)
