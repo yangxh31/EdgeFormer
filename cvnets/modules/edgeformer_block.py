@@ -809,13 +809,126 @@ class gcc_dk_ca_mf_block(BaseModule):
         return x_ffn
 
 
+
+class gcc_ca_mf_block_onnx(BaseModule):
+    def __init__(self,
+                 dim: int,
+                 meta_kernel_size: int,
+                 instance_kernel_method='crop',
+                 use_pe:Optional[bool]=True,
+                 mid_mix: Optional[bool]=True,
+                 bias: Optional[bool]=True,
+                 ffn_dim: Optional[int]=2,
+                 ffn_dropout=0.0,
+                 dropout=0.1):
+
+        
+
+        super(gcc_ca_mf_block_onnx, self).__init__()
+
+        # spatial part,
+        self.pre_Norm_1 = nn.BatchNorm2d(num_features=dim)
+        self.pre_Norm_2 = nn.BatchNorm2d(num_features=dim)
+
+        self.conv_1_H = nn.Conv2d(dim, dim, (meta_kernel_size, 1), groups=dim)
+        self.conv_1_W = nn.Conv2d(dim, dim, (1, meta_kernel_size), groups=dim)
+        self.conv_2_H = nn.Conv2d(dim, dim, (meta_kernel_size, 1), groups=dim)
+        self.conv_2_W = nn.Conv2d(dim, dim, (1, meta_kernel_size), groups=dim)
+
+        if bias:
+            self.meta_1_H_bias = nn.Parameter(torch.randn(dim))
+            self.meta_1_W_bias = nn.Parameter(torch.randn(dim))
+            self.meta_2_H_bias = nn.Parameter(torch.randn(dim))
+            self.meta_2_W_bias = nn.Parameter(torch.randn(dim))
+        else:
+            self.meta_1_H_bias = None
+            self.meta_1_W_bias = None
+            self.meta_2_H_bias = None
+            self.meta_2_W_bias = None
+
+        self.instance_kernel_method = instance_kernel_method
+
+        if use_pe:
+            self.meta_pe_1_H = nn.Parameter(torch.randn(1, dim, meta_kernel_size, 1))
+            self.meta_pe_1_W = nn.Parameter(torch.randn(1, dim, 1, meta_kernel_size))
+            self.meta_pe_2_H = nn.Parameter(torch.randn(1, dim, meta_kernel_size, 1))
+            self.meta_pe_2_W = nn.Parameter(torch.randn(1, dim, 1, meta_kernel_size))
+
+
+        if mid_mix:
+            self.mixer = nn.ChannelShuffle(groups=2)
+
+        self.mid_mix = mid_mix
+        self.use_pe = use_pe
+        self.dim = dim
+
+        # channel part
+        self.ffn = nn.Sequential(
+            nn.BatchNorm2d(num_features=2*dim),
+            nn.Conv2d(2*dim, ffn_dim, kernel_size=(1, 1), bias=True),
+            nn.Hardswish(),
+            Dropout(p=ffn_dropout),
+            nn.Conv2d(ffn_dim, 2*dim, kernel_size=(1, 1), bias=True),
+            Dropout(p=dropout)
+        )
+
+        self.ca = CA_layer(channel=2*dim)
+
+
+
+
+    def forward(self, x: Tensor) -> Tensor:
+
+        x_1, x_2 = torch.chunk(x, 2, 1)
+
+        x_1_res, x_2_res = x_1, x_2
+        
+        if self.use_pe:
+            pe_1_H, pe_1_W, pe_2_H, pe_2_W = self.get_instance_pe(self.kernel_cut_size)
+
+        # **************************************************************************************************sptial part
+        # pre norm
+        if self.use_pe:
+            x_1, x_2 = x_1 + pe_1_H, x_2 + pe_1_W
+
+        x_1, x_2 = self.pre_Norm_1(x_1), self.pre_Norm_2(x_2)
+
+        # stage 1
+        x_1_1 = self.conv_1_H(torch.cat((x_1, x_1[:, :, :-1, :]), dim=2))
+        x_2_1 = self.conv_1_W(torch.cat((x_2, x_2[:, :, :, :-1]), dim=3))
+
+        if self.mid_mix:
+            mid_rep = torch.cat((x_1_1, x_2_1), dim=1)
+            x_1_1, x_2_1 = torch.chunk(self.mixer(mid_rep), chunks=2, dim=1)
+
+        if self.use_pe:
+            x_1_1, x_2_1 = x_1_1 + pe_2_W, x_2_1 + pe_2_H
+
+        # stage 2
+        x_1_2 = self.conv_2_H(torch.cat((x_1_1, x_1_1[:, :, :, :-1]), dim=3))
+        x_2_2 = self.conv_2_W(torch.cat((x_2_1, x_2_1[:, :, :-1, :]), dim=2))
+
+        # residual
+        x_1 = x_1_res + x_1_2
+        x_2 = x_2_res + x_2_2
+
+        # *************************************************************************************************channel part
+        x_ffn = torch.cat((x_1, x_2), dim=1)
+        x_ffn = x_ffn + self.ca(self.ffn(x_ffn))
+
+        return x_ffn
+
+
+
+
 block_dict={
     'bkc': bkc_mf_block,
     'bkc_ca': bkc_ca_mf_block,
     'gcc': gcc_mf_block,
     'gcc_ca': gcc_ca_mf_block,
     'gcc_dk': gcc_dk_mf_block,
-    'gcc_dk_ca': gcc_dk_ca_mf_block
+    'gcc_dk_ca': gcc_dk_ca_mf_block,
+    'gcc_onnx':gcc_ca_mf_block_onnx
 }
 
 
