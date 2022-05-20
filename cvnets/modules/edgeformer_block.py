@@ -875,7 +875,28 @@ class gcc_ca_mf_block_onnx(BaseModule):
         self.ca = CA_layer(channel=2*dim)
 
 
+    def get_instance_pe(self, instance_kernel_size):
+        if self.instance_kernel_method == 'crop':
+            return self.meta_pe_1_H[:, :, :instance_kernel_size, :]\
+                       .expand(1, self.dim, instance_kernel_size, instance_kernel_size), \
+                   self.meta_pe_1_W[:, :, :, :instance_kernel_size]\
+                       .expand(1, self.dim, instance_kernel_size, instance_kernel_size), \
+                   self.meta_pe_2_H[:, :, :instance_kernel_size, :]\
+                       .expand(1, self.dim, instance_kernel_size, instance_kernel_size), \
+                   self.meta_pe_2_W[:, :, :, :instance_kernel_size]\
+                       .expand(1, self.dim, instance_kernel_size, instance_kernel_size)
 
+        elif self.instance_kernel_method == 'interpolation_bilinear':
+            return F.interpolate(self.meta_pe_1_H, [instance_kernel_size, 1], mode='bilinear', align_corners=True)\
+                       .expand(1, self.dim, instance_kernel_size, instance_kernel_size), \
+                   F.interpolate(self.meta_pe_1_W, [1, instance_kernel_size], mode='bilinear', align_corners=True)\
+                       .expand(1, self.dim, instance_kernel_size, instance_kernel_size), \
+                   F.interpolate(self.meta_pe_2_H, [instance_kernel_size, 1], mode='bilinear', align_corners=True)\
+                       .expand(1, self.dim, instance_kernel_size, instance_kernel_size), \
+                   F.interpolate(self.meta_pe_2_W, [1, instance_kernel_size], mode='bilinear', align_corners=True)\
+                       .expand(1, self.dim, instance_kernel_size, instance_kernel_size)
+        else:
+            print('{} is not supported!'.format(self.instance_kernel_method))
 
     def forward(self, x: Tensor) -> Tensor:
 

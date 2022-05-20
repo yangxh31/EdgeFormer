@@ -123,7 +123,7 @@ class edgeformer(BaseEncoder):
         group.add_argument('--model.classification.edge.scale', type=str, default='scale_s',
                            choices=['scale_xs', 'scale_s', 'scale_h'], help="model scale")
         group.add_argument('--model.classification.edge.kernel', type=str, default="gcc_ca",
-                           choices=['gcc_ca', 'gcc', 'bkc_ca', 'bkc'])
+                           choices=['gcc_ca', 'gcc', 'bkc_ca', 'bkc','gcc_onnx'])
         group.add_argument('--model.classification.edge.fusion', type=str, default="concat",
                            choices=['add', 'concat'])
         group.add_argument('--model.classification.edge.instance_kernel', type=str, default="crop",
