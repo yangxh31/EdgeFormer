@@ -1,19 +1,20 @@
 import torch
 from torch import nn
-from EdgeFormer.cvnets.layers import GlobalPool
+from torch.onnx import register_custom_op_symbolic
+from cvnets.layers import GlobalPool
 
-from EdgeFormer.cvnets.models.classification.edgeformer import edgeformer
+from cvnets.models.classification.edgeformer import edgeformer
 import torch
 import torch.nn.functional as F
 import multiprocessing
 
-from EdgeFormer.cvnets import get_model
-from EdgeFormer.utils import logger
-from EdgeFormer.utils.common_utils import device_setup
-from EdgeFormer.options.opts import get_eval_arguments, get_training_arguments
-from EdgeFormer.options.utils import load_config_file
+from cvnets import get_model
+from utils import logger
+from utils.common_utils import device_setup
+from options.opts import get_eval_arguments, get_training_arguments
+from options.utils import load_config_file
 
-file_name='path'
+file_name='test_gen_onnx'
 
 opts = get_training_arguments(False)
 
@@ -60,6 +61,17 @@ model_onnx = edgeformer(opts)
 
 model.eval()
 model_onnx.eval()
+def hardsigmoid_symbolic(g, input):
+    three = g.op('Constant', value_t=torch.tensor(3.0))
+    six   = g.op('Constant', value_t=torch.tensor(6.0))
+    one   = g.op('Constant', value_t=torch.tensor(1.0))
+    zero  = g.op('Constant', value_t=torch.tensor(0.0))
+
+    x = g.op('Add', input, three)
+    x = g.op('Div', x, six)
+    x = g.op('Clip', x, zero, one)
+
+    return x
 
 def move_weights_dy2fr(model_dk: nn.Module,
                        model_fr: nn.Module):
@@ -112,6 +124,7 @@ model_onnx.eval()
 
 torch_out = new_model(x)
 
+register_custom_op_symbolic('::hardsigmoid', hardsigmoid_symbolic, 12)
 # Export the model
 torch.onnx.export(new_model,               # model being run
                   x,                         # model input (or a tuple for multiple inputs)
@@ -121,3 +134,4 @@ torch.onnx.export(new_model,               # model being run
                   output_names=['output'],
                   dynamic_axes={'input': {0: 'sequence'}, 'output': {0: 'sequence'}}
  )
+
